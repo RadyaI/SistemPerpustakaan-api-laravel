@@ -17,7 +17,9 @@ class siswaController extends Controller
     }
 
     public function getsemuasiswa(){
-        $dt_siswa=siswa::get();
+        $dt_siswa=siswa::
+        join('kelas','siswa.id_kelas','=','kelas.id_kelas')
+        ->get();
         return Response()->json($dt_siswa);
         // return view('perpustakaan.index');
     }
@@ -46,6 +48,7 @@ class siswaController extends Controller
                 'tanggal_lahir'=>'required',
                 'gender'=>'required',
                 'alamat'=>'required',
+                
 
             ]);
 
@@ -59,7 +62,8 @@ class siswaController extends Controller
                     'tanggal_lahir' => $req->get('tanggal_lahir'),
                     'gender' => $req->get('gender'),
                     'alamat' => $req->get('alamat'),
-        
+                    'id_kelas' =>$req->get('id_kelas')
+
                 ]);
 
                 if($save){
