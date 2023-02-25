@@ -40,7 +40,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         // Route::group(['middleware' => ['api.admin']],function(){
             Route::post('/createsiswa',[siswaController::class,'createsiswa']);
             // Route::post('/addsiswa',[siswaController::class,'store']);
-            Route::put('/updatesiswa/{id}',[siswaController::class,'updatesiswa']);
+            Route::patch('/updatesiswa/{id}',[siswaController::class,'updatesiswa']);
             Route::post('/createkelas',[kelasController::class,'createkelas']);
             Route::put('/updatekelas/{id}',[kelasController::class,'updatekelas']);
             Route::post('/createbuku',[bukuController::class,'createbuku']);
