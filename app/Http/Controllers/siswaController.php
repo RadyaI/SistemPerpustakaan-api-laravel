@@ -103,10 +103,10 @@ class siswaController extends Controller
             }
             $ubah= siswa::where('id_siswa',$id)->update(
                 [
-                    'nama_siswa' => $req->get('nama_siswa'),
-                    'tanggal_lahir' => $req->get('tanggal_lahir'),
-                    'gender' => $req->get('gender'),
-                    'alamat' => $req->get('alamat'),
+                    'nama_siswa' => $req->input('nama_siswa'),
+                    'tanggal_lahir' => $req->input('tanggal_lahir'),
+                    'gender' => $req->input('gender'),
+                    'alamat' => $req->input('alamat'),
                 ]);
 
                 if($ubah){
