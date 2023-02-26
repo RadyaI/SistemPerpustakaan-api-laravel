@@ -61,8 +61,8 @@ class bukuController extends Controller
             }
             $ubah= buku::where('id_buku',$id)->update(
                 [
-                    'judul_buku' => $req->get('judul_buku'),
-                    'pengarang' => $req->get('pengarang'),
+                    'judul_buku' => $req->input('judul_buku'),
+                    'pengarang' => $req->input('pengarang'),
                 ]);
 
                 if($ubah){

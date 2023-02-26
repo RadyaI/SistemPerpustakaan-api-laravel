@@ -44,7 +44,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
             Route::post('/createkelas',[kelasController::class,'createkelas']);
             Route::put('/updatekelas/{id}',[kelasController::class,'updatekelas']);
             Route::post('/createbuku',[bukuController::class,'createbuku']);
-            Route::put('/updatebuku/{id}',[bukuController::class,'updatebuku']);
+            Route::patch('/updatebuku/{id}',[bukuController::class,'updatebuku']);
             Route::post('/createpeminjaman',[peminjamanController::class,'createpeminjaman']);
             Route::put('/updatepeminjaman/{id}',[peminjamanController::class,'updatepeminjaman']);
         // });
