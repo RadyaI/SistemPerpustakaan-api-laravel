@@ -40,11 +40,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         // Route::group(['middleware' => ['api.admin']],function(){
             Route::post('/createsiswa',[siswaController::class,'createsiswa']);
             // Route::post('/addsiswa',[siswaController::class,'store']);
-            Route::patch('/updatesiswa/{id}',[siswaController::class,'updatesiswa']);
+            Route::put('/updatesiswa/{id}',[siswaController::class,'updatesiswa']);
             Route::post('/createkelas',[kelasController::class,'createkelas']);
             Route::put('/updatekelas/{id}',[kelasController::class,'updatekelas']);
             Route::post('/createbuku',[bukuController::class,'createbuku']);
-            Route::patch('/updatebuku/{id}',[bukuController::class,'updatebuku']);
+            Route::put('/updatebuku/{id}',[bukuController::class,'updatebuku']);
             Route::post('/createpeminjaman',[peminjamanController::class,'createpeminjaman']);
             Route::put('/updatepeminjaman/{id}',[peminjamanController::class,'updatepeminjaman']);
         // });
@@ -66,17 +66,20 @@ Route::get('/getsiswa',[siswaController::class,'getsemuasiswa']);
 
 //KELAS
 Route::get('/getkelas',[kelasController::class,'getkelas']);
+Route::get('/getkelas/{id}',[kelasController::class,'getdetailkelas']);
 
 
 //BUKU
 Route::get('/getbuku',[bukuController::class,'getbuku']);
+Route::get('/getbuku/{id}',[bukuController::class,'getdetailbuku']);
 
 
 //PEMINJAMAN
 // Route::get('/getpeminjaman',[peminjamanController::class,'getsemuapeminjaman']);
 Route::get('/peminjaman',[peminjamanController::class,'getpeminjaman1']);
-Route::get('/getpeminjaman/{id}',[peminjamanController::class,'getpeminjaman']);
-Route::put('/peminjaman/pengembalian/{id}',[peminjamanController::class,'kembali']); 
+Route::get('/peminjaman/{id}',[peminjamanController::class,'getpeminjaman']);
+Route::put('/pengembalian/{id}',[peminjamanController::class,'kembali']); 
+Route::get('/getstatus/{status}',[peminjamanController::class,'getstatus']);
 
 //DETAIL
 Route::get('/getdetail',[detailController::class,'getdetail']);

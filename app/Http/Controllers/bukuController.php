@@ -16,6 +16,11 @@ class bukuController extends Controller
     
     }
 
+    public function getdetailbuku($id){
+        $getbuku = buku::where('id_buku' , '=' , $id)->get();
+            return response()->json($getbuku);
+    }
+
     //CREATE
 
         public function createbuku(Request $req){

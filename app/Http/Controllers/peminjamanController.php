@@ -14,7 +14,7 @@ class peminjamanController extends Controller
     //SELECT/GET
 
     public function getpeminjaman($id){
-        $data_peminjaman=peminjaman::select('nama_siswa','nama_kelas','judul_buku','tgl_pinjam','status')
+        $data_peminjaman=peminjaman::select('nama_siswa','nama_kelas','judul_buku','tgl_pinjam','tgl_kembali','status')
         ->join('siswa','siswa.id_siswa','=','peminjaman.id_siswa')
         ->join('kelas','kelas.id_kelas','=','peminjaman.id_kelas')
         ->join('buku','buku.id_buku','=','peminjaman.id_buku')
@@ -25,17 +25,20 @@ class peminjamanController extends Controller
     }   
 
     public function getpeminjaman1(){
-        $data_siswa = peminjaman::get();
+        $data_siswa = peminjaman::
+        join('siswa','siswa.id_siswa','=','peminjaman.id_siswa')
+        ->orderBy('id_peminjaman','desc')   
+        ->get();
             return response()->json($data_siswa);
     }
-    // public function getsemuapeminjaman(){
-    //     $data_siswa = peminjaman::
-    //       join('siswa','siswa.id_siswa','=','peminjaman.id_siswa')
-    //     ->join('kelas','kelas.id_kelas','=','peminjaman.id_kelas')
-    //     ->join('buku','buku.id_buku','=','peminjaman.id_buku')
-    //     ->get();
-    //         return response()->json($data_siswa);
-    // }
+
+    public function getstatus($id){
+        $status = peminjaman::where('status', '=' , $id)
+        // ->select('id_peminjaman','id_siswa','nama_siswa','nama_kelas','judul_buku','tanggal_pinjam','tanggal_kembali','status')
+        ->join('siswa','siswa.id_siswa','=','peminjaman.id_siswa')
+        ->get();
+            return response()->json($status);
+    }
 
     //CREATE
 
@@ -62,7 +65,7 @@ class peminjamanController extends Controller
                     'id_kelas' => $req->get('id_kelas'),
                     'id_buku' => $req->get('id_buku'),
                     'tgl_pinjam' => $pinjam,
-                    'tgl_kembali' => $kembali,
+
                     'status' => "dipinjam",
                 ]);
 
@@ -131,9 +134,12 @@ class peminjamanController extends Controller
 
         public function kembali($id){
 
+            $tgl_kembali = carbon::now();
+
             $kembali = peminjaman::where('id_peminjaman',$id)
             ->update([
-                'status' => 'kembali'
+                'status' => 'kembali',
+                'tgl_kembali' => $tgl_kembali
             ]);
 
             if($kembali){

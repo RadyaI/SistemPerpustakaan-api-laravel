@@ -15,6 +15,11 @@ class kelasController extends Controller
     return Response()->json($data_kelas);
    }
 
+   public function getdetailkelas($id){
+    $data_kelas = kelas::where('id_kelas' ,'=',$id)->get();
+        return response()->json($data_kelas);
+   }
+
    //CREATE
    
         public function createkelas(Request $req){

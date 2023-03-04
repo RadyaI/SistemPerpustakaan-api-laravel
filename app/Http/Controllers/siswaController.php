@@ -107,6 +107,7 @@ class siswaController extends Controller
                     'tanggal_lahir' => $req->input('tanggal_lahir'),
                     'gender' => $req->input('gender'),
                     'alamat' => $req->input('alamat'),
+                    'id_kelas' => $req->input('id_kelas'),
                 ]);
 
                 if($ubah){
