@@ -14,10 +14,10 @@ class peminjamanController extends Controller
     //SELECT/GET
 
     public function getpeminjaman($id){
-        $data_peminjaman=peminjaman::select('nama_siswa','nama_kelas','judul_buku','tgl_pinjam','tgl_kembali','status')
-        ->join('siswa','siswa.id_siswa','=','peminjaman.id_siswa')
-        ->join('kelas','kelas.id_kelas','=','peminjaman.id_kelas')
-        ->join('buku','buku.id_buku','=','peminjaman.id_buku')
+        $data_peminjaman=peminjaman::
+        //   join('siswa','siswa.id_siswa','=','peminjaman.id_siswa')
+        // ->join('kelas','kelas.id_kelas','=','peminjaman.id_kelas')
+        join('buku','buku.id_buku','=','peminjaman.id_buku')
         ->where('id_peminjaman','=', $id)
         ->get();
         return Response()->json($data_peminjaman);
@@ -26,8 +26,8 @@ class peminjamanController extends Controller
 
     public function getpeminjaman1(){
         $data_siswa = peminjaman::
-        join('siswa','siswa.id_siswa','=','peminjaman.id_siswa')
-        ->orderBy('id_peminjaman','desc')   
+        // join('siswa','siswa.id_siswa','=','peminjaman.id_siswa')
+          orderBy('id_peminjaman','desc')   
         ->get();
             return response()->json($data_siswa);
     }
@@ -46,8 +46,8 @@ class peminjamanController extends Controller
             $validator = validator::make($req->all(),
             [
 
-                'id_siswa'=>'required',
-                'id_kelas'=>'required',
+                // 'id_siswa'=>'required',
+                // 'id_kelas'=>'required',
                 'id_buku'=>'required',
 
             ]);
@@ -56,16 +56,18 @@ class peminjamanController extends Controller
                 return Response()->json($validator->errors()->toJson());
             }
 
-            $kembali= carbon::now()->addDays(10);
+            $tenggat= carbon::now()->addDays(10);
             $pinjam= carbon::now();
 
             $save = peminjaman::create(
                 [
-                    'id_siswa' => $req->get('id_siswa'),
-                    'id_kelas' => $req->get('id_kelas'),
-                    'id_buku' => $req->get('id_buku'),
+                    // 'id_siswa' => $req->get('id_siswa'),
+                    'nama' => $req->input('nama'),
+                    // 'id_kelas' => $req->get('id_kelas'),
+                    'alamat' => $req->input('alamat'),
+                    'id_buku' => $req->input('id_buku'),
                     'tgl_pinjam' => $pinjam,
-
+                    'tenggat' => $tenggat,
                     'status' => "dipinjam",
                 ]);
 
