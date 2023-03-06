@@ -135,13 +135,18 @@ class peminjamanController extends Controller
         }
 
         public function kembali($id){
-
+            $tgl_pinjam = carbon::now();
             $tgl_kembali = carbon::now();
+            $tenggat= carbon::now()->addDays(5);
+            $denda = 15000;
+
+
 
             $kembali = peminjaman::where('id_peminjaman',$id)
             ->update([
                 'status' => 'kembali',
-                'tgl_kembali' => $tgl_kembali
+                'tgl_kembali' => $tgl_kembali,
+                'denda' => $denda,
             ]);
 
             if($kembali){
