@@ -56,7 +56,7 @@ class peminjamanController extends Controller
                 return Response()->json($validator->errors()->toJson());
             }
 
-            $tenggat= carbon::now()->addDays(10);
+            $tenggat= carbon::now()->addDays(5);
             $pinjam= carbon::now();
 
             $save = peminjaman::create(
@@ -137,8 +137,7 @@ class peminjamanController extends Controller
         public function kembali($id){
             $tgl_pinjam = carbon::now();
             $tgl_kembali = carbon::now();
-            $tenggat= carbon::now()->addDays(5);
-            $denda = 15000;
+            $denda = 25000;
 
 
 
