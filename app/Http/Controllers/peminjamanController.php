@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\peminjaman;
-use App\Models\detail;
+// use App\Models\detail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +27,8 @@ class peminjamanController extends Controller
     public function getpeminjaman1(){
         $data_siswa = peminjaman::
         // join('siswa','siswa.id_siswa','=','peminjaman.id_siswa')
-          orderBy('id_peminjaman','desc')   
+        where('tgl_kembali','=',null)
+        ->orderBy('id_peminjaman','desc')   
         ->get();
         // ->paginate(3);
             return response()->json($data_siswa);
@@ -41,9 +42,28 @@ class peminjamanController extends Controller
             return response()->json($status);
     }
 
-    public function getdenda(){
-        $denda = peminjaman::where('denda','>',0)->get();
-            return response()->json($denda);    
+    public function history(){
+        $history = peminjaman::
+        where('denda' ,'=', 0 )
+        ->where('tgl_kembali','!=',null)
+        ->join('buku','buku.id_buku','=','peminjaman.id_buku')
+        ->get();
+            return response()->json($history);
+    }
+
+    public function denda(){
+        $denda = peminjaman::
+        where('denda','!=',0)
+        ->where('tgl_kembali','!=',null)
+        ->join('buku','buku.id_buku','=','peminjaman.id_buku')
+        ->get();
+            return response()->json($denda);
+    }
+
+    public function bayardenda($id){
+        $denda = peminjaman::where('id_peminjaman','=',$id)->update([
+            'denda' => 0
+        ]);
     }
 
     //CREATE
@@ -95,14 +115,14 @@ class peminjamanController extends Controller
         
 
         //UPDATE
-
         public function editpeminjaman(Request $req, $id){
-            $edit = peminjaman::where('id_peminjamaan','=',$id)->update([
+            $edit = peminjaman::where('id_peminjaman','=',$id)->update([
                 'tgl_pinjam' => $req->input('tgl_pinjam'),
                 'tgl_kembali' => $req->input('tgl_kembali'),
+                'tenggat' => $req->input('tenggat'),
                 'denda' => $req->input('denda')
             ]);
-            return response()->json(['Status' => 'berhasil']);
+            return response()->json(['Message' => 'sukses edit data']);
         }
 
         // DELETE   
@@ -156,10 +176,5 @@ class peminjamanController extends Controller
             }
         }
 
-        public function bayardenda($id){
-            $denda = peminjaman::where('id_peminjaman','=',$id)->update([
-                'denda' => 0
-            ]);
-        }
 
 }
