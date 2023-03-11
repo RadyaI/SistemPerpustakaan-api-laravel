@@ -29,6 +29,7 @@ class peminjamanController extends Controller
         // join('siswa','siswa.id_siswa','=','peminjaman.id_siswa')
           orderBy('id_peminjaman','desc')   
         ->get();
+        // ->paginate(3);
             return response()->json($data_siswa);
     }
 
@@ -38,6 +39,11 @@ class peminjamanController extends Controller
         ->join('siswa','siswa.id_siswa','=','peminjaman.id_siswa')
         ->get();
             return response()->json($status);
+    }
+
+    public function getdenda(){
+        $denda = peminjaman::where('denda','>',0)->get();
+            return response()->json($denda);    
     }
 
     //CREATE
@@ -90,35 +96,16 @@ class peminjamanController extends Controller
 
         //UPDATE
 
-        public function updatepeminjaman(Request $req, $id){
-
-            $validator =  Validator::make($req->all(),[
-                'id_siswa'=>'required',
-                'id_kelas'=>'required',
-                'id_buku'=>'required',
+        public function editpeminjaman(Request $req, $id){
+            $edit = peminjaman::where('id_peminjamaan','=',$id)->update([
+                'tgl_pinjam' => $req->input('tgl_pinjam'),
+                'tgl_kembali' => $req->input('tgl_kembali'),
+                'denda' => $req->input('denda')
             ]);
-
-            if($validator->fails()){
-                return Response()->json($validator->errors()->toJson());
-            }
-            $ubah= peminjaman::where('id_peminjaman',$id)->update(
-                [
-                    'id_siswa' => $req->get('id_siswa'),
-                    'id_kelas' => $req->get('id_kelas'),
-                    'id_buku' => $req->get('id_buku'),
-                ]);
-
-                if($ubah){
-                    // return view('status');
-                    return Response()->json(['status' => true , 'message' => 'berhasil update peminjaman' ]);
-
-                }else{
-                    return Response()->json(['status' => false , 'message' => 'Gagal update peminjaman' ]);
-                    // return view('gagal');
-                }
+            return response()->json(['Status' => 'berhasil']);
         }
 
-        // DELETE
+        // DELETE   
 
         public function deletepeminjaman($id){
 
@@ -135,16 +122,30 @@ class peminjamanController extends Controller
         }
 
         public function kembali($id){
-            $tgl_pinjam = carbon::now();
-            $tgl_kembali = carbon::now();
-            $denda = 25000;
+            $dt_kembali = peminjaman::where('id_peminjaman','=',$id)->select('tgl_kembali')->get();
+
+            // $tgl_sekarang = carbon::now()->format('y-m-d');
+            $tgl_sekarang = Carbon::now();
+            // $tgl_kembali = new Carbon($dt_kembali -> $tgl_kembali);
+            if($dt_kembali > $tgl_sekarang){
+                $denda = 25000;
+            } else {
+                $denda = 0;
+            }
+            
+            // if(strtotime($tgl_sekarang) > strtotime($dt_kembali)) {
+            //     $jumlah_hari = $dt_kembali -> diff ($tgl_sekarang) -> days;
+            //     $denda = $jumlah_hari*$dendaperhari;
+            // }else{
+            //     $denda = 0;
+            // }
 
 
 
             $kembali = peminjaman::where('id_peminjaman',$id)
             ->update([
                 'status' => 'kembali',
-                'tgl_kembali' => $tgl_kembali,
+                'tgl_kembali' => $tgl_sekarang,
                 'denda' => $denda,
             ]);
 
@@ -153,6 +154,12 @@ class peminjamanController extends Controller
             }else{
                 return Response()->json(['Status' => false, 'Message' => 'gagal mengembalikan buku']);
             }
+        }
+
+        public function bayardenda($id){
+            $denda = peminjaman::where('id_peminjaman','=',$id)->update([
+                'denda' => 0
+            ]);
         }
 
 }
