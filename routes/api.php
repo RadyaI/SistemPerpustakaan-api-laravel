@@ -46,7 +46,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
             Route::post('/createbuku',[bukuController::class,'createbuku']);
             Route::put('/updatebuku/{id}',[bukuController::class,'updatebuku']);
             Route::post('/createpeminjaman',[peminjamanController::class,'createpeminjaman']);
-            Route::put('/updatepeminjaman/{id}',[peminjamanController::class,'updatepeminjaman']);
+            // Route::put('/updatepeminjaman/{id}',[peminjamanController::class,'updatepeminjaman']);
         // });
         
         // Route::group(['middleware' => ['api.superadmin']],function(){
@@ -79,10 +79,16 @@ Route::get('/getbuku/{id}',[bukuController::class,'getdetailbuku']);
 Route::get('/peminjaman',[peminjamanController::class,'getpeminjaman1']);
 Route::get('/peminjaman/{id}',[peminjamanController::class,'getpeminjaman']);
 Route::put('/pengembalian/{id}',[peminjamanController::class,'kembali']); 
-Route::put('/editpeminjamaan/{id}',[peminjamanController::class,'editpeminjaman']);
+// Route::put('/editpeminjamaan/{id}',[peminjamanController::class,'editpeminjaman']);
 Route::get('/getstatus/{status}',[peminjamanController::class,'getstatus']);
-Route::get('/getdenda/{id}',[peminjamanController::class,'getdenda']);
-Route::put('/bayardenda/{id}', [peminjamanController::class,'bayardenda']);
+Route::put('/editpeminjaman/{id}', [peminjamanController::class,'editpeminjaman']);
+
+// HISTORY
+Route::get('/gethistory',[peminjamanController::class,'history']);
+// DENDA
+Route::get('/getdenda',[peminjamanController::class,'denda']);
+Route::put('/bayardenda/{id}',[peminjamanController::class,'bayardenda']);
+
 
 //DETAIL
 Route::get('/getdetail',[detailController::class,'getdetail']);
