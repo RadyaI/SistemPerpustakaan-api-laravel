@@ -79,7 +79,10 @@ Route::get('/getbuku/{id}',[bukuController::class,'getdetailbuku']);
 Route::get('/peminjaman',[peminjamanController::class,'getpeminjaman1']);
 Route::get('/peminjaman/{id}',[peminjamanController::class,'getpeminjaman']);
 Route::put('/pengembalian/{id}',[peminjamanController::class,'kembali']); 
+Route::put('/editpeminjamaan/{id}',[peminjamanController::class,'editpeminjaman']);
 Route::get('/getstatus/{status}',[peminjamanController::class,'getstatus']);
+Route::get('/getdenda/{id}',[peminjamanController::class,'getdenda']);
+Route::put('/bayardenda/{id}', [peminjamanController::class,'bayardenda']);
 
 //DETAIL
 Route::get('/getdetail',[detailController::class,'getdetail']);
