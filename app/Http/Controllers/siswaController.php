@@ -11,15 +11,14 @@ class siswaController extends Controller
     //SELECT/GET
 
     public function getsiswa($id){
-        $dt_siswa=siswa::where('id_siswa','=',$id)->get();
+        $dt_siswa=siswa::where('id_siswa','=',$id)
+        ->get();
         return Response()->json($dt_siswa);
         // return view('perpustakaan.index');
     }
 
     public function getsemuasiswa(){
-        $dt_siswa=siswa::
-        join('kelas','siswa.id_kelas','=','kelas.id_kelas')
-        ->get();
+        $dt_siswa=siswa::get();
         return Response()->json($dt_siswa);
         // return view('perpustakaan.index');
     }
@@ -62,7 +61,7 @@ class siswaController extends Controller
                     'tanggal_lahir' => $req->get('tanggal_lahir'),
                     'gender' => $req->get('gender'),
                     'alamat' => $req->get('alamat'),
-                    'id_kelas' =>$req->get('id_kelas')
+                    'umur' =>$req->get('umur')
 
                 ]);
 
@@ -84,7 +83,7 @@ class siswaController extends Controller
             ]);
 
             $siswa->save();
-            return responses()->tojson('Siswa di tambah!');
+            return response()->tojson('Siswa di tambah!');
         }
 
         //UPDATE
@@ -107,7 +106,7 @@ class siswaController extends Controller
                     'tanggal_lahir' => $req->input('tanggal_lahir'),
                     'gender' => $req->input('gender'),
                     'alamat' => $req->input('alamat'),
-                    'id_kelas' => $req->input('id_kelas'),
+                    'umur' => $req->input('umur'),
                 ]);
 
                 if($ubah){

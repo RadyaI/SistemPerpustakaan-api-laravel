@@ -11,5 +11,5 @@ class siswa extends Model
     public $timestamps = null;
     protected $table="siswa";
     protected $primaryKey="id_siswa";
-    protected $fillable=['nama_siswa','tanggal_lahir','gender','alamat','id_kelas'];
+    protected $fillable=['nama_siswa','tanggal_lahir','gender','alamat','umur'];
 }
