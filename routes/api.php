@@ -29,13 +29,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 //JWT
-// Route::post('/register',[UserController::class,'register']);
-// Route::post('/login',[UserController::class,'login']);
+Route::post('/register',[UserController::class,'register']);
+Route::post('/login',[UserController::class,'login']);
 
+// 
 
-
-
-// Route::group(['middleware' =>['jwt.verify']],function () {
+Route::group(['middleware' =>['jwt.verify']],function () {
 
         // Route::group(['middleware' => ['api.admin']],function(){
             Route::post('/createsiswa',[siswaController::class,'createsiswa']);
@@ -94,7 +93,7 @@ Route::put('/bayardenda/{id}',[peminjamanController::class,'bayardenda']);
 Route::get('/getdetail',[detailController::class,'getdetail']);
 Route::post('/createdetail',[detailController::class,'createdetail']);
 
-// });
+});
 
 
 
