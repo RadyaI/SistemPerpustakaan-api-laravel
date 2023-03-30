@@ -31,11 +31,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //JWT
 Route::post('/register',[UserController::class,'register']);
 Route::post('/login',[UserController::class,'login']);
+Route::post('/checkToken',[UserController::class,'getAuthenticatedUser']);
 
 // 
 
 Route::group(['middleware' =>['jwt.verify']],function () {
-
+    
+      Route::post('/logout',[UserController::class,'logout']);
         // Route::group(['middleware' => ['api.admin']],function(){
             Route::post('/createsiswa',[siswaController::class,'createsiswa']);
             // Route::post('/addsiswa',[siswaController::class,'store']);
@@ -62,7 +64,6 @@ Route::get('/getsiswa/{id}',[siswaController::class,'getsiswa']);
 Route::get('/getsiswa',[siswaController::class,'getsemuasiswa']);
 
 
-
 //KELAS
 Route::get('/getkelas',[kelasController::class,'getkelas']);
 Route::get('/getkelas/{id}',[kelasController::class,'getdetailkelas']);
@@ -80,13 +81,13 @@ Route::get('/peminjaman/{id}',[peminjamanController::class,'getpeminjaman']);
 Route::put('/pengembalian/{id}',[peminjamanController::class,'kembali']); 
 // Route::put('/editpeminjamaan/{id}',[peminjamanController::class,'editpeminjaman']);
 Route::get('/getstatus/{status}',[peminjamanController::class,'getstatus']);
-Route::put('/editpeminjaman/{id}', [peminjamanController::class,'editpeminjaman']);
+
 
 // HISTORY
 Route::get('/gethistory',[peminjamanController::class,'history']);
 // DENDA
 Route::get('/getdenda',[peminjamanController::class,'denda']);
-Route::put('/bayardenda/{id}',[peminjamanController::class,'bayardenda']);
+
 
 
 //DETAIL
@@ -94,6 +95,6 @@ Route::get('/getdetail',[detailController::class,'getdetail']);
 Route::post('/createdetail',[detailController::class,'createdetail']);
 
 });
-
-
+Route::put('/editpeminjaman/{id}', [peminjamanController::class,'editpeminjaman']);
+Route::put('/bayardenda/{id}',[peminjamanController::class,'bayardenda']);
 
