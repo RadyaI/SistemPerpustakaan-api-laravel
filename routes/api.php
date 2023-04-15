@@ -78,7 +78,6 @@ Route::get('/getbuku/{id}',[bukuController::class,'getdetailbuku']);
 // Route::get('/getpeminjaman',[peminjamanController::class,'getsemuapeminjaman']);
 Route::get('/peminjaman',[peminjamanController::class,'getpeminjaman1']);
 Route::get('/peminjaman/{id}',[peminjamanController::class,'getpeminjaman']);
-Route::put('/pengembalian/{id}',[peminjamanController::class,'kembali']); 
 // Route::put('/editpeminjamaan/{id}',[peminjamanController::class,'editpeminjaman']);
 Route::get('/getstatus/{status}',[peminjamanController::class,'getstatus']);
 
@@ -95,6 +94,8 @@ Route::get('/getdetail',[detailController::class,'getdetail']);
 Route::post('/createdetail',[detailController::class,'createdetail']);
 
 });
+
 Route::put('/editpeminjaman/{id}', [peminjamanController::class,'editpeminjaman']);
 Route::put('/bayardenda/{id}',[peminjamanController::class,'bayardenda']);
+Route::put('/pengembalian/{id}',[peminjamanController::class,'kembali']); 
 
