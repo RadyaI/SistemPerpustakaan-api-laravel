@@ -35,7 +35,7 @@ Route::post('/checkToken',[UserController::class,'getAuthenticatedUser']);
 
 // 
 
-Route::group(['middleware' =>['jwt.verify']],function () {
+// Route::group(['middleware' =>['jwt.verify']],function () {
     
       Route::post('/logout',[UserController::class,'logout']);
         // Route::group(['middleware' => ['api.admin']],function(){
@@ -93,7 +93,7 @@ Route::get('/getdenda',[peminjamanController::class,'denda']);
 Route::get('/getdetail',[detailController::class,'getdetail']);
 Route::post('/createdetail',[detailController::class,'createdetail']);
 
-});
+// });
 
 Route::put('/editpeminjaman/{id}', [peminjamanController::class,'editpeminjaman']);
 Route::put('/bayardenda/{id}',[peminjamanController::class,'bayardenda']);

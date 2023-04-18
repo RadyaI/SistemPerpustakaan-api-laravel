@@ -39,6 +39,7 @@ class bukuController extends Controller
                 [
                     'judul_buku' => $req->get('judul_buku'),
                     'pengarang' => $req->get('pengarang'),
+                    'jumlah_pinjam' => 0
                 ]);
 
                 if($save){
